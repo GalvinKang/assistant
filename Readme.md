@@ -17,7 +17,7 @@ $ac1 = $clientA->getQuery('/pat/test/ac',['name' => '张三','age' => 18,'gender
 $ac2 = $clientA->getQuery('/pat/test/ac',['name' => '张三','age' => 18,'gender' => '男'])->send();
 print_r($ac1);
 print_r($ac2);
-$clientB = new General('http://test.api.datacenter.miaoshou.com/v1/');
+$clientB = new General('http://test.api.datacenter/v1/');
 $cc1 = $client2->getQuery('test/cc1')->send();
 print_r($cc1);
 
@@ -68,7 +68,7 @@ Array
 $clientA = new Concurrent('http://kang.live');
 $aa = $clientA->getQuery('aa','/pat/test/ac',['name' => '张三','age' => 18,'gender' => '男']);
 $bb = $clientA->getQuery('bb','/pat/test/ac',['name' => '张三','age' => 18,'gender' => '男']);
-$clientB = new Concurrent('http://test.api.datacenter.miaoshou.com/v1/');
+$clientB = new Concurrent('http://test.api.datacenter/v1/');
 $cc = $clientB->getQuery('cc','test/cc1');
 $request = new ConcurrentRequest();
 $re = $request->send($a,$b,$c);
