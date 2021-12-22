@@ -39,7 +39,7 @@ class Concurrent
         if($base_uri) $defCon['base_uri'] = trim($base_uri);
         $stack = HandlerStack::create();
         $logger  = new Logger('Logger');
-        $logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/concurrent.log', Logger::DEBUG));
+        $logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/http/concurrent.log', Logger::DEBUG));
         $logger->pushHandler(new FirePHPHandler());
         $stack->push(
             Middleware::log(

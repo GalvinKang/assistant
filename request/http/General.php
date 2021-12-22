@@ -42,7 +42,7 @@ class General
         if($base_uri) $defCon['base_uri'] = trim($base_uri);
         $stack = HandlerStack::create();
         $logger  = new Logger('Logger');
-        $logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/general.log', Logger::DEBUG));
+        $logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/http/general.log', Logger::DEBUG));
         $logger->pushHandler(new FirePHPHandler());
         $stack->push(
             Middleware::log(
