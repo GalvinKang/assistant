@@ -4,9 +4,15 @@ use Ass\tools\Format;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Exception;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\RedirectMiddleware;
 use GuzzleHttp\Psr7\Utils;
 use \GuzzleHttp\Promise\Utils as PU;
+use Monolog\Handler\FirePHPHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Throwable;
 
 /**
@@ -31,7 +37,17 @@ class Concurrent
     {
         $defCon = $this->defaultConfigure();
         if($base_uri) $defCon['base_uri'] = trim($base_uri);
-        $con = array_merge($defCon,$configure);
+        $stack = HandlerStack::create();
+        $logger  = new Logger('Logger');
+        $logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/concurrent.log', Logger::DEBUG));
+        $logger->pushHandler(new FirePHPHandler());
+        $stack->push(
+            Middleware::log(
+                $logger,
+                new MessageFormatter(MessageFormatter::DEBUG)
+            )
+        );
+        $con = array_merge($defCon,$configure,['handler' => $stack]);
         if($con['cookies']) $con['cookies'] = CookieJar::fromArray($con['cookies'],parse_url($base_uri)['host']);
         $this->client = new Client($con);
     }
