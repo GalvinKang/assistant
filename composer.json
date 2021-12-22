@@ -1,4 +1,8 @@
 {
+    "name": "GalvinKang/assistant",
+    "description": "http client",
+    "type": "project",
+    "license": "MIT",
     "require": {
         "guzzlehttp/guzzle": "^7.4",
         "ext-json": "*",
