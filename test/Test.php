@@ -59,13 +59,14 @@ class Test
     //并发测试
     public function dd()
     {
+
+        $clientB = new \Ass\request\http\Concurrent('http://test.api.datacenter.miaoshou.com/v1/',['log' => true]);
+        $c = $clientB->getQuery('cc','test/cc1');
         $clientA = new \Ass\request\http\Concurrent('http://kang.live');
         $a = $clientA->getQuery('aa','/pat/test/ac',['name' => '张三','age' => 18,'gender' => '男']);
         $b = $clientA->getQuery('bb','/pat/test/ac',['name' => '张三','age' => 18,'gender' => '男']);
-        $clientB = new \Ass\request\http\Concurrent('http://test.api.datacenter.miaoshou.com/v1/');
-        $c = $clientB->getQuery('cc','test/cc1');
         $request = new \Ass\request\http\ConcurrentRequest();
-        $re = $request->send($a,$b,$c);
+        $re = $request->send($c,$b,$a);
         print_r($re);
 
 
